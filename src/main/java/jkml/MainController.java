@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,8 +45,7 @@ public class MainController {
 	public Map<String, Object> authentication(Authentication authentication) {
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("name", authentication.getName());
-		List<String> aus = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.toUnmodifiableList());
+		List<String> aus = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 		body.put("authorities", aus);
 		return body;
 	}

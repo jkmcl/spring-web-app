@@ -6,12 +6,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class WebSecurityConfiguration {
+class WebSecurityConfiguration {
 
 	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().mvcMatchers("/authentication").authenticated();
-		http.authorizeHttpRequests().anyRequest().permitAll();
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(authorize -> authorize
+			.requestMatchers("/authentication").authenticated()
+			.anyRequest().permitAll()
+		);
 		return http.build();
 	}
 

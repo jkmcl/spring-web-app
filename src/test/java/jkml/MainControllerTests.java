@@ -54,7 +54,7 @@ class MainControllerTests {
 	}
 
 	@Test
-	@WithMockUser(username = "user", authorities = { "authority" })
+	@WithMockUser(username = "user1", authorities = { "authority1" })
 	void testAuthentication() throws Exception {
 		mockMvc.perform(get("/authentication")).andDo(print())
 				.andExpect(status().isOk())
