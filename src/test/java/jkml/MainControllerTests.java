@@ -3,6 +3,7 @@ package jkml;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -60,6 +61,15 @@ class MainControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name").exists())
 				.andExpect(jsonPath("$.authorities").exists());
+	}
+
+	@Test
+	@WithMockUser(username = "user1", authorities = { "authority1" })
+	void testUnsupported() throws Exception {
+		mockMvc.perform(get("/unsupported")).andDo(print())
+				.andExpect(status().isInternalServerError())
+				.andExpect(jsonPath("$.status").value("500"))
+				.andExpect(result -> assertInstanceOf(UnsupportedOperationException.class, result.getResolvedException()));
 	}
 
 }

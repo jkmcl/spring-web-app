@@ -50,4 +50,9 @@ public class MainController {
 		return body;
 	}
 
+	@GetMapping("/unsupported")
+	public void unsupported() {
+		throw new UnsupportedOperationException("Unsupported operation");
+	}
+
 }
