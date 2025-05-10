@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -68,7 +69,7 @@ class MainControllerTests {
 	void testUnsupported() throws Exception {
 		mockMvc.perform(get("/unsupported")).andDo(print())
 				.andExpect(status().isInternalServerError())
-				.andExpect(jsonPath("$.status").value("500"))
+				.andExpect(jsonPath("$.status").value(HttpStatus.INTERNAL_SERVER_ERROR.value()))
 				.andExpect(result -> assertInstanceOf(UnsupportedOperationException.class, result.getResolvedException()));
 	}
 
