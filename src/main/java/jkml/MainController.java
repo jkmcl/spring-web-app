@@ -54,4 +54,9 @@ public class MainController {
 		throw new UnsupportedOperationException("Unsupported operation");
 	}
 
+	@GetMapping("/authority1")
+	public Map<String, String> authority1() {
+		return Map.of("Message", "You have reached /authority1");
+	}
+
 }

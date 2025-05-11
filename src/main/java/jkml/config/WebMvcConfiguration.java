@@ -1,21 +1,17 @@
-package jkml;
+package jkml.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import jkml.RequestLoggingInterceptor;
+
 @Configuration
 class WebMvcConfiguration implements WebMvcConfigurer {
 
-	private final RequestLoggingInterceptor requestLoggingInterceptor;
-
-	WebMvcConfiguration(RequestLoggingInterceptor requestLoggingInterceptor) {
-		this.requestLoggingInterceptor = requestLoggingInterceptor;
-	}
-
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(requestLoggingInterceptor).addPathPatterns("/**");
+		registry.addInterceptor(new RequestLoggingInterceptor()).addPathPatterns("/**");
 	}
 
 }

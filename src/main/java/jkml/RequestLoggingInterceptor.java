@@ -2,7 +2,6 @@ package jkml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.fasterxml.uuid.Generators;
@@ -11,7 +10,6 @@ import com.fasterxml.uuid.NoArgGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Component
 public class RequestLoggingInterceptor implements HandlerInterceptor {
 
 	private static final String ATTR_NAME = RequestLoggingInterceptor.class.getSimpleName() + ".REQ_ID";
