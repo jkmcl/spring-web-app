@@ -13,11 +13,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-	private final Logger myLogger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleNonMvcException(Exception ex, WebRequest request) {
-		myLogger.error("Exception thrown", ex);
+		logger.error("Exception thrown", ex);
 
 		var status = HttpStatus.INTERNAL_SERVER_ERROR;
 		var headers = new HttpHeaders();

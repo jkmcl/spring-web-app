@@ -3,7 +3,6 @@ package jkml;
 import java.net.URI;
 import java.time.Instant;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
@@ -24,7 +23,7 @@ public class MainController {
 
 	@GetMapping("/redirect")
 	public ResponseEntity<Object> redirect() {
-		HttpHeaders headers = new HttpHeaders();
+		var headers = new HttpHeaders();
 		headers.setLocation(URI.create("https://www.google.com/"));
 		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
@@ -36,17 +35,17 @@ public class MainController {
 
 	@GetMapping("/properties")
 	public Map<String, String> properties() {
-		Map<String, String> body = new LinkedHashMap<>();
+		var body = new LinkedHashMap<String, String>();
 		System.getProperties().forEach((k, v) -> body.put(k.toString(), v.toString()));
 		return body;
 	}
 
 	@GetMapping("/authentication")
 	public Map<String, Object> authentication(Authentication authentication) {
-		Map<String, Object> body = new LinkedHashMap<>();
+		var body = new LinkedHashMap<String, Object>();
 		body.put("name", authentication.getName());
-		List<String> aus = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
-		body.put("authorities", aus);
+		var authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+		body.put("authorities", authorities);
 		return body;
 	}
 
