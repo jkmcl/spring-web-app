@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Based on BasicAuthenticationFilter.
+ * Based on (@link BasicAuthenticationFilter}.
  */
 public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 

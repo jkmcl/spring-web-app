@@ -9,9 +9,16 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 import jkml.security.ApiKeyAuthenticationFilter;
 import jkml.security.ApiKeyAuthenticationManager;
+import jkml.security.SecurityExceptionHandler;
 
 @Configuration
 class WebSecurityConfiguration {
+
+	private final SecurityExceptionHandler securityExceptionHandler;
+
+	WebSecurityConfiguration(SecurityExceptionHandler entryPoint) {
+		this.securityExceptionHandler = entryPoint;
+	}
 
 	// This bean also disables the auto-configured UserDetailsService
 	@Bean
@@ -30,6 +37,8 @@ class WebSecurityConfiguration {
 				.requestMatchers("/authority1").hasAuthority("authority1")
 				.anyRequest().permitAll()
 		);
+		// https://www.baeldung.com/spring-security-exceptionhandler
+		http.exceptionHandling(eh -> eh.authenticationEntryPoint(securityExceptionHandler).accessDeniedHandler(securityExceptionHandler));
 		return http.build();
 	}
 
