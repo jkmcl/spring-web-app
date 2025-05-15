@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class ApiKeyAuthenticationConverter implements AuthenticationConverter {
 
-	private static final String API_KEY_HEADER_NAME = "X-API-Key";
+	public static final String API_KEY_HEADER_NAME = "X-API-Key";
 
 	private final Logger logger = LoggerFactory.getLogger(ApiKeyAuthenticationConverter.class);
 

@@ -3,9 +3,7 @@ package jkml.security;
 import java.io.IOException;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.web.authentication.AuthenticationConverter;
@@ -42,19 +40,19 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		try {
-			Authentication authRequest = this.authenticationConverter.convert(request);
+			var authRequest = authenticationConverter.convert(request);
 			if (authRequest == null) {
 				chain.doFilter(request, response);
 				return;
 			}
-			Authentication authResult = this.authenticationManager.authenticate(authRequest);
-			SecurityContext context = this.securityContextHolderStrategy.createEmptyContext();
+			var authResult = authenticationManager.authenticate(authRequest);
+			var context = securityContextHolderStrategy.createEmptyContext();
 			context.setAuthentication(authResult);
-			this.securityContextHolderStrategy.setContext(context);
-			this.securityContextRepository.saveContext(context, request, response);
+			securityContextHolderStrategy.setContext(context);
+			securityContextRepository.saveContext(context, request, response);
 		} catch (AuthenticationException ex) {
-			this.logger.debug("Failed to process authentication request", ex);
-			this.securityContextHolderStrategy.clearContext();
+			logger.debug("Failed to process authentication request", ex);
+			securityContextHolderStrategy.clearContext();
 		}
 
 		chain.doFilter(request, response);

@@ -2,7 +2,6 @@ package jkml.security;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -16,11 +15,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class SecurityExceptionHandler implements AuthenticationEntryPoint, AccessDeniedHandler {
+public class SecurityExceptionResolver implements AuthenticationEntryPoint, AccessDeniedHandler {
 
-	@Autowired
-	@Qualifier("handlerExceptionResolver")
-	private HandlerExceptionResolver resolver;
+	private final HandlerExceptionResolver resolver;
+
+	public SecurityExceptionResolver(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
+		this.resolver = resolver;
+	}
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
