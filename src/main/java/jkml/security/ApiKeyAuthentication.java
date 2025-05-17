@@ -4,8 +4,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+ * Based on {@link UsernamePasswordAuthenticationToken}.
+ */
 public class ApiKeyAuthentication extends AbstractAuthenticationToken {
 
 	private static final long serialVersionUID = 1L;
