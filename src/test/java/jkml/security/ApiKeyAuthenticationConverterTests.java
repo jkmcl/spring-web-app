@@ -18,18 +18,18 @@ class ApiKeyAuthenticationConverterTests {
 		var request = new MockHttpServletRequest();
 		request.addHeader(ApiKeyAuthenticationConverter.API_KEY_HEADER_NAME, apiKey);
 
-		var authentication = converter.convert(request);
+		var auth = converter.convert(request);
 
-		assertEquals(apiKey, authentication.getPrincipal().toString());
+		assertEquals(apiKey, auth.getPrincipal().toString());
 	}
 
 	@Test
 	void testConvert_failure() {
 		var request = new MockHttpServletRequest();
 
-		var authentication = converter.convert(request);
+		var auth = converter.convert(request);
 
-		assertNull(authentication);
+		assertNull(auth);
 	}
 
 }

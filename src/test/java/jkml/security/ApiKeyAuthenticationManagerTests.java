@@ -7,10 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 class ApiKeyAuthenticationManagerTests {
@@ -19,13 +17,8 @@ class ApiKeyAuthenticationManagerTests {
 
 	private static final String AUTHORITY = "authority";
 
-	private ApiKeyAuthenticationManager manager;
-
-	@BeforeEach
-	void beforeEach() {
-		Map<String, Set<GrantedAuthority>> authorities = Map.of(API_KEY, Set.of(new SimpleGrantedAuthority(AUTHORITY)));
-		manager = new ApiKeyAuthenticationManager(authorities);
-	}
+	private final ApiKeyAuthenticationManager manager = new ApiKeyAuthenticationManager(
+			Map.of(API_KEY, Set.of(new SimpleGrantedAuthority(AUTHORITY))));
 
 	@Test
 	void testAuthenticate_success() {

@@ -37,12 +37,12 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
 		try {
 			var authRequest = authenticationConverter.convert(request);
 			if (authRequest == null) {
-				chain.doFilter(request, response);
+				filterChain.doFilter(request, response);
 				return;
 			}
 			var authResult = authenticationManager.authenticate(authRequest);
@@ -55,7 +55,7 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
 			securityContextHolderStrategy.clearContext();
 		}
 
-		chain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 	}
 
 }
