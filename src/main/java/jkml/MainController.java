@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-	@GetMapping("/now")
+	@GetMapping(Paths.NOW)
 	public Map<String, String> now() {
 		return Map.of("now", Instant.now().toString());
 	}
 
-	@GetMapping("/redirect")
+	@GetMapping(Paths.REDIRECT)
 	public ResponseEntity<Object> redirect() {
 		var headers = new HttpHeaders();
 		headers.setLocation(URI.create("https://www.google.com/"));
 		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
 
-	@GetMapping("/env")
+	@GetMapping(Paths.ENV)
 	public Map<String, String> env() {
 		return System.getenv();
 	}
 
-	@GetMapping("/properties")
+	@GetMapping(Paths.PROPERTIES)
 	public Map<String, String> properties() {
 		var body = new LinkedHashMap<String, String>();
 		System.getProperties().forEach((k, v) -> body.put(k.toString(), v.toString()));
 		return body;
 	}
 
-	@GetMapping("/authentication")
+	@GetMapping(Paths.AUTHENTICATION)
 	public Map<String, Object> authentication(Authentication authentication) {
 		var body = new LinkedHashMap<String, Object>();
 		body.put("name", authentication.getName());
@@ -49,14 +49,14 @@ public class MainController {
 		return body;
 	}
 
-	@GetMapping("/unsupported")
+	@GetMapping(Paths.UNSUPPORTED)
 	public void unsupported() {
 		throw new UnsupportedOperationException("Unsupported operation");
 	}
 
-	@GetMapping("/authority1")
+	@GetMapping(Paths.AUTHORITY1)
 	public Map<String, String> authority1() {
-		return Map.of("Message", "You have reached /authority1");
+		return Map.of("Message", "You have reached " + Paths.AUTHORITY1);
 	}
 
 }

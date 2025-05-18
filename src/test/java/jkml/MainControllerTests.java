@@ -29,45 +29,45 @@ class MainControllerTests {
 
 	@Test
 	void testNow() throws Exception {
-		mockMvc.perform(get("/now")).andDo(print())
+		mockMvc.perform(get(Paths.NOW)).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.now").exists());
 	}
 
 	@Test
 	void testRedirect() throws Exception {
-		mockMvc.perform(get("/redirect")).andDo(print())
+		mockMvc.perform(get(Paths.REDIRECT)).andDo(print())
 				.andExpect(status().isFound())
 				.andExpect(header().exists(HttpHeaders.LOCATION));
 	}
 
 	@Test
 	void testEnv() throws Exception {
-		mockMvc.perform(get("/env")).andDo(print())
+		mockMvc.perform(get(Paths.ENV)).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string(is(not(emptyString()))));
 	}
 
 	@Test
 	void testProperties() throws Exception {
-		mockMvc.perform(get("/properties")).andDo(print())
+		mockMvc.perform(get(Paths.PROPERTIES)).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$['java.version']").exists());
 	}
 
 	@Test
-	@WithMockUser(username = "user1", authorities = { "authority1" })
+	@WithMockUser(authorities = { Authorities.AUTHORITY1 })
 	void testAuthentication() throws Exception {
-		mockMvc.perform(get("/authentication")).andDo(print())
+		mockMvc.perform(get(Paths.AUTHENTICATION)).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name").exists())
 				.andExpect(jsonPath("$.authorities").exists());
 	}
 
 	@Test
-	@WithMockUser(username = "user1", authorities = { "authority1" })
+	@WithMockUser(authorities = {  Authorities.AUTHORITY1 })
 	void testUnsupported() throws Exception {
-		mockMvc.perform(get("/unsupported")).andDo(print())
+		mockMvc.perform(get(Paths.UNSUPPORTED)).andDo(print())
 				.andExpect(status().isInternalServerError())
 				.andExpect(jsonPath("$.status").value(HttpStatus.INTERNAL_SERVER_ERROR.value()))
 				.andExpect(result -> assertInstanceOf(UnsupportedOperationException.class, result.getResolvedException()));
