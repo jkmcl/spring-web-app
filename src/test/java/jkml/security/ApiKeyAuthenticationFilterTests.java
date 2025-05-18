@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 class ApiKeyAuthenticationFilterTests {
 
-	private static final String API_KEY = "key";
+	private static final String API_KEY = UUID.randomUUID().toString();
 
 	private final SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder
 			.getContextHolderStrategy();
@@ -50,7 +51,7 @@ class ApiKeyAuthenticationFilterTests {
 	@Test
 	void testDoFilterInternal_invalidKey() throws IOException, ServletException {
 		var request = new MockHttpServletRequest();
-		request.addHeader(ApiKeyAuthenticationConverter.API_KEY_HEADER_NAME, API_KEY + "INVALID");
+		request.addHeader(ApiKeyAuthenticationConverter.API_KEY_HEADER_NAME, "INVALID_KEY");
 
 		filter.doFilterInternal(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 

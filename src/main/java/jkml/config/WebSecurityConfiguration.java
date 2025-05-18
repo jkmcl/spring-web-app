@@ -2,6 +2,7 @@ package jkml.config;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-
-import com.fasterxml.uuid.Generators;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -44,10 +43,9 @@ class WebSecurityConfiguration {
 	// This bean also disables the auto-configured UserDetailsService
 	@Bean
 	AuthenticationManager authenticationManager() {
-		var generator = Generators.randomBasedGenerator();
 		Map<String, Set<GrantedAuthority>> authorities = Map.of(
-				generator.generate().toString(), Set.of(),
-				generator.generate().toString(), Set.of(new SimpleGrantedAuthority(Authorities.AUTHORITY1)));
+				UUID.randomUUID().toString(), Set.of(),
+				UUID.randomUUID().toString(), Set.of(new SimpleGrantedAuthority(Authorities.AUTHORITY1)));
 
 		logger.warn("\n\nUsing generated API keys for development use only: {}\n", authorities);
 
